@@ -1,0 +1,24 @@
+;; Symbol layer: Lafayette/Ergo‑L AltGr programmation layer
+;; but enables a NumRow.
+
+(defalias
+  num (layer-toggle numrow)
+)
+
+(deflayer symbols
+	_     _     _     _     _     _     _     _     _     _     _
+  @^    @<    @>    @$    @%          @@    @&    @*    @'    @`
+  @{    @pl   @pr   @}    @=          @\    @+    @-    @/    @''
+  @~    @[    @]    @_    @#          @|    @!    @;    @:    @?
+              @num              spc               _
+) 
+
+;; Numrow layer
+
+(deflayer numrow
+	_     _     _     _     _     _     _     _     _     _     _
+  XX    XX    XX    XX    XX          XX    XX    XX    XX    XX
+  @1    @2    @3    @4    @5          @6    @7    @8    @9    @0
+  XX    XX    XX    XX    XX          XX    @-    @,    @.    @/
+              _                 @nbs              @sym 
+)

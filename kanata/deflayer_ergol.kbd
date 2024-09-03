@@ -1,0 +1,131 @@
+(deftemplate dk-sft (base-action shift-action)
+  (fork (unicode $base-action) (unicode  $shift-action) (lsft rsft))
+)
+
+(defalias
+  nav (tap-hold 250 250 spc (layer-while-held navigation))
+  sym (tap-hold-press 200 200 ret (layer-while-held symbols))
+  
+  ;; Shift mods 
+  sft0 (tap-hold-press 200 200 bspc (multi lsft (layer-while-held baseSft)))
+  sft1 (tap-hold-press 200 200 bspc (multi lsft (layer-while-held dk1)))
+  sft2 (tap-hold-press 200 200 bspc (multi lsft (layer-while-held dk2)))
+  sft3 (tap-hold-press 200 200 bspc (multi lsft (layer-while-held dk3)))
+
+  ;; Home-row mods
+  ss (tap-hold 250 250 s lmet)
+  dd (tap-hold 250 250 e lctl)
+  ff (tap-hold 250 250 n lalt)
+  jj (tap-hold 250 250 r lalt)
+  kk (tap-hold 250 250 t rctl)
+  ll (tap-hold 250 250 i rmet)
+  
+  ;; dead key 
+  dk (tap-dance 5000 (
+		(one-shot-press 5000 (layer-while-held dk1))
+		(one-shot-press 5000 (layer-while-held dk2))
+		(one-shot-press 5000 (layer-while-held dk3))
+  ))
+)
+
+;; sft0
+(defalias	
+	?sft m
+	!sft (unshift /)
+	;sft (unshift ,)
+	:sft (unshift .)
+	mark 3
+	nbs (unicode  ) ;; no break space
+)
+
+;; Dead key layer 1
+(defalias
+	smark (unicode ’)
+
+	Â (t! dk-sft â Â)
+	Ç (t! dk-sft ç Ç)
+	Œ (t! dk-sft œ Œ)
+	Ô (t! dk-sft ô Ô)	
+	µ (fork (unicode µ) XX (lsft rsft))
+	_dk (unshift 8)
+	Û (t! dk-sft û Û)
+
+	À (t! dk-sft à À)
+	É (t! dk-sft é É)
+	È (t! dk-sft è È)
+	Ê (t! dk-sft ê Ê)
+	Ñ (t! dk-sft ñ Ñ)
+	lpar (fork 5 XX (lsft rsft))
+	rpar (fork - XX (lsft rsft))
+	Î (t! dk-sft î Î)
+	Ï (t! dk-sft ï Ï)
+	Ù (t! dk-sft ù Ù)
+
+	Æ (t! dk-sft æ Æ)
+	ẞ (t! dk-sft ß ẞ)
+	¿ (t! dk-sft ‑ ¿)
+	– (fork (unicode –) XX (lsft rsft))
+	— (fork (unicode —) XX (lsft rsft))
+	… (fork (unicode …) XX (lsft rsft))
+	• (t! dk-sft · •)
+)
+
+;; Dead key layer 2
+(defalias
+	Ö (t! dk-sft ö Ö)
+	Ẅ (t! dk-sft ẅ Ẅ)
+	Ÿ (t! dk-sft ÿ Ÿ)
+		
+	Ä (t! dk-sft ä Ä)
+	Ë (t! dk-sft ë Ë)
+	ẗ (fork (unicode ẗ) XX (lsft rsft))
+	Ü (t! dk-sft ü Ü)
+
+	Ẍ (t! dk-sft ẍ Ẍ)
+	Ḧ (t! dk-sft ḧ Ḧ)
+)
+
+;; Dead key layer 3
+(defalias
+	diaeresis (unicode ¨)
+)
+
+(deflayer base
+	_     _     _     _     _     _        _     _     _     _     _
+	a     c     o     p     z              j     ;     d     @dk   y
+	q     @ss   @dd   @ff   f              l     @jj   @kk   @ll   u 
+	w     x     @-    v     b              @.    h     g     m     k
+		          @sft0             @nav                 @sym
+)
+
+(deflayer baseSft
+	_     _     _     _     _     _        _     _     _     _     _
+	a     c     o     p     z              j     ;     d     @!sft y
+	q     @ss   @dd   @ff   f              l     @jj   @kk   @ll   u 
+	w     x     @?sft v     b              @:sft h     g     @;sft k
+	            _                 @nav                 _
+)
+
+(deflayer dk1
+	_     _     _     _     _     _        _     _     _     _     _
+	@Â    @Ç    @Œ   @Ô     _              _     @µ    @_dk  @dk   @Û
+	@À    @É    @È   @Ê     @Ñ             @lpar @rpar @Î    @Ï    @Ù  
+	@Æ    @ẞ    @¿   @–     @—             @…    XX    XX    @•    XX    
+	            @sft1             @smark               _
+)
+
+(deflayer dk2
+	_     _     _     _     _     _        _     _     _     _     _
+	a     c     @Ö    p     @Ẅ             j     ;     d     @dk   @Ÿ
+	@Ä    s     @Ë    n     f              l     r     @ẗ    @Ï    @Ü 
+	w     @Ẍ    @-    v     b              @.    @Ḧ    g     m     k 
+	            @sft2             @mark                _
+)
+
+(deflayer dk3
+	_     _     _     _     _     _        _     _     _     _     _
+	a     c     o     p     z              j     ;     d     @dk   y
+	q     s     e     n     f              l     r     t     i     u 
+	w     x     @-    v     b              @.    h     g     m     k
+	            @sft3             @diaeresis           _
+)
