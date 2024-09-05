@@ -3,7 +3,7 @@
 )
 
 (defalias
-  nav (tap-hold 250 250 spc (layer-while-held navigation))
+  nav (tap-hold-press 250 250 spc (layer-while-held navigation))
   sym (tap-hold-press 200 200 ret (layer-while-held symbols))
   
   ;; Shift mods 
